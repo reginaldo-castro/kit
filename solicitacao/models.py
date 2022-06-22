@@ -38,11 +38,11 @@ class Kit(models.Model):
         return f"{self.descricao}"
 
     def save(self, *args, **kwargs):
-        qrcode_img = qrcode.make([self.descricao, self.equipamentos])
-        canvas = Image.new('RGB', (390,390), 'white')
+        qrcode_img = qrcode.make([self.descricao, self.equipamentos, self.image.url])
+        canvas = Image.new('RGB', (450,450), 'white')
         draw = ImageDraw.Draw(canvas)
         canvas.paste(qrcode_img)
-        fname = f'qrcode-{self.descricao}.png, qrcode-{self.equipamentos}.png'
+        fname = f'qrcode-{self.descricao}.png, qrcode-{self.equipamentos}.png, qrcode-{self.image}'
         buffer = BytesIO()
         canvas.save(buffer, 'PNG')
         self.qr_code.save(fname, File(buffer), save=False)
@@ -60,8 +60,8 @@ class Solicitacao(models.Model):
     kit = models.ForeignKey(Kit, on_delete=models.PROTECT, verbose_name="Kit Solicitado")
     #kit  = models.CharField(max_length=150, verbose_name="Nome do kit")
     #equipamento = models.CharField(max_length=150, verbose_name="Equipamentos que compoe o kit")
-    data = models.DateField(auto_now=True)
-    hora = models.TimeField(auto_now=True)
+    data = models.DateField(auto_now=False, blank=True, null=True)
+    hora = models.TimeField(auto_now=False, blank=True, null=True)
     matricula = models.IntegerField(verbose_name="Matricula do solicitante")   
     status = models.CharField(verbose_name="Solicitação", max_length=12, choices=STATUS_SOLICITACAO, default="SOLICITADO")
 
