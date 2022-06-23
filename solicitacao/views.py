@@ -84,19 +84,6 @@ def informacoes(request, id):
 
     form = SolicitacaoForm(instance=solicitacao)
 
-    if request.method == "POST":
-
-        form = SolicitacaoForm(request.POST, request.FILES, instance=solicitacao)
-        print(form)
-        if form.is_valid():
-            solicitacao.status = "FECHADO"
-            solicitacao.hora = timezone.localtime(timezone.now())
-            form.save()
-
-            messages.success(request, "solicitacao enviado para o solicitante!!")
-
-            return redirect("index")
-
     context = {
         "nome_pagina": "Infomações do solicitacao",
         "solicitacao": solicitacao,
@@ -112,6 +99,7 @@ def finalizar(request, id):
 
         solicitacao = get_object_or_404(Solicitacao, id=id)
         solicitacao.status = "FINALIZADO"
+        solicitacao.kit.status = "DISPONIVEL"
         solicitacao.hora_termino = timezone.localtime(timezone.now())
 
         solicitacao.save()
