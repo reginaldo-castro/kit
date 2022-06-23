@@ -1,6 +1,7 @@
 {% load static %}
+{% load qr_code %}
 <!doctype html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -13,15 +14,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 
   
-    <title>bffbook </title>
+    <title>QrCode</title>
   </head>
   <body>
     <div class="ui container">
-
-    <h1>{{name}} - {{obj.descricao}}</h1>
-    <p>{{obj.equipamentos}}</p>
-    <img src={{obj.qr_code.url}}>
-
+    <h3>Kit</h3>
+    {% qr_for_vcard vcard=vcard_contact size='S' %}   
     </div>
 
   </body>

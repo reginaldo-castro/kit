@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-03l4!6ce!asei@_vx^8(as5&$l7qz31caf=agg51f+oj2)4-o8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'solicitacao',
     "widget_tweaks",
+    'qr_code',
 ]
 
 MIDDLEWARE = [

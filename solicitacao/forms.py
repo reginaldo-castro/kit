@@ -5,5 +5,5 @@ class SolicitacaoForm(forms.ModelForm):
     class Meta:
         model = Solicitacao
         fields = [
-            "kit", "matricula",
+            "kit", "matricula","observacao"
         ]

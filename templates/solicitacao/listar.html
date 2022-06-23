@@ -1,4 +1,61 @@
-<h1>Listagem de Solicitação</h1>
-{{solicitacao}}
+{% extends "solicitacao/base.html" %}
+{% block content %}
 
-{{context}}
+  <h2>
+    Solicitações
+    <a href="{% url 'solicitar' %}" class="btn btn-primary pull-right">
+      <span class="glyphicon glyphicon-plus"></span> Add Solicitação
+    </a>
+  </h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Kit</th>
+        <th>Status Kit</th>
+        <th>Matricula</th>
+        <th>Equipamentos</th>
+        <th>Status</th>
+        <th>Data Solicitacao</th>
+        <th>Hora Solicitacao</th>
+        <th>Observação</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      {% for solicitacoes in pag_solicita.object_list %}
+        <tr>
+          <td>{{ solicitacoes.id }}</td>
+          <td>{{ solicitacoes.kit }}</td>
+          <td>{{ solicitacoes.kit.status }}</td>
+          <td>{{ solicitacoes.matricula }}</td>
+          <td>{{ solicitacoes.kit.equipamentos }}</td>
+          <td>{{ solicitacoes.status }}</td>
+          <td>{{ solicitacoes.data }}</td>
+          <td>{{ solicitacoes.hora }}</td>
+          <td>{{ solicitacoes.observacao }}</td>
+          <td>
+            <a href="{% url 'informacoes' id=solicitacoes.id %}">
+            <i class="fas fa-info-circle"></i></a>
+        </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="6" class="text-center">Sem resultado</td>
+        </tr>
+        
+      {% endfor %}
+  </tbody>
+</table>
+<center>
+    {% if pag_solicita.has_previous %}
+        <a href="?page={{pag_solicita.previous_page_number}}"><i class="fa-solid fa-circle-chevron-left"></i></i></a>
+    {% endif %}
+    <span>{{pag_solicita.number}}</span>
+    
+    {% if pag_solicita.has_next %} {# whether the next page exists #}
+        <a href="?page={{pag_solicita.next_page_number}}"><i class="fa-solid fa-circle-chevron-right"></i></a>
+    {% endif %}
+</center>
+{% endblock %}
